@@ -872,7 +872,7 @@ function Experience() {
             A experiência Venus
           </h2>
           <p className="mt-3 text-white/80 max-w-prose">
-            Precisão clássica, ambiente agradavel e atenção real aos detalhes.
+            Precisão clássica, ambiente agradável e atenção real aos detalhes.
             Você entra, relaxa e sai um novo homem para qualquer ocasião.
           </p>
           <ul className="mt-6 space-y-3 text-white/80">
@@ -1068,10 +1068,10 @@ function Barbers() {
                   {b.bio}
                 </p>
 
-                <div className="mt-auto pt-3">
+                <div className="mt-auto pt-2">
                   <a
                     href="#"
-                    className="inline-flex px-4 py-2 rounded-xl border border-white/15 hover:bg-white/10 text-sm"
+                    className="inline-flex px-3 py-2 rounded-xl border border-white/15 hover:bg-white/10 text-sm"
                   >
                     Agendar com {b.name}
                   </a>
@@ -1148,7 +1148,7 @@ function LearnMethod() {
 
       {/* confiança/garantia */}
       <p className="mt-4 text-sm md:text-base text-white/70 leading-relaxed">
-        Inscrição segura. Suporte direto da nossa equipa. Certificado de
+        Inscrição segura, suporte direto da nossa equipa e certificado de
         conclusão incluso.
       </p>
     </section>
