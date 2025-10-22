@@ -4,14 +4,9 @@ import { createPortal } from "react-dom";
 import logo from "./assets/venus-logo.png";
 import imgCentro from "./assets/unidade-barcelos.png";
 import imgArcozelo from "./assets/unidade-arcozelo.png";
-import videoCentro from "./assets/video-unidade-barcelos.mp4";
-import videoArcozelo from "./assets/video-unidade-arcozelo.mp4";
-import videoExperiencia from "./assets/video-experiencia-venus-test.mp4";
-import videoChamada from "./assets/video-experiencia-venus-test.mp4";
 import barb01 from "./assets/barbeiro-exemplo01.jpg";
 import barb02 from "./assets/barbeiro-exemplo02.jpg";
 import barb03 from "./assets/barbeiro-exemplo03.jpg";
-import gengiscan from "./assets/gengiscan.png";
 import gengiscanNova from "./assets/gengiscan-nova.png";
 
 function useInView(options = { threshold: 0.25, rootMargin: "0px" }) {
@@ -597,7 +592,10 @@ function VideoCard({ children }) {
 }
 /* === HERO === */
 function Hero({ unit }) {
-  const unitVideos = { centro: videoCentro, arcozelo: videoArcozelo };
+  const unitVideos = {
+    centro: "/videos/video-unidade-barcelos.mp4",
+    arcozelo: "/videos/video-unidade-arcozelo.mp4",
+  };
   const unitPosters = { centro: imgCentro, arcozelo: imgArcozelo };
 
   return (
@@ -893,8 +891,8 @@ function Experience() {
         <div className="relative [perspective:1000px] group">
           <VideoCard>
             <AutoPlayVideo
-              src={videoExperiencia}
-              poster={imgCentro} // pode trocar por outra capa se quiser
+              src="/videos/video-experiencia-venus-test.mp4"
+              poster={imgCentro}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
             />
           </VideoCard>
@@ -1100,9 +1098,7 @@ function LearnMethod() {
       <div className="mt-6">
         <VideoCard>
           <AutoPlayVideo
-            src={videoChamada}
-            // se quiser uma imagem de capa enquanto carrega, descomente a linha abaixo e troque o poster
-            // poster={imgCentro}
+            src="/videos/video-experiencia-venus-test.mp4"
             className="w-full h-full object-cover"
           />
         </VideoCard>
