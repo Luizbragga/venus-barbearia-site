@@ -49,10 +49,9 @@ const UNITS = {
     phone: "+351 914 197 122",
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=R.+de+Oliven%C3%A7a+281,+4750-191+Barcelos",
-    whatsapp: "https://wa.me/351914197122?text=Quero%20agendar",
-    fresha:
-      "https://www.fresha.com/pt/lvp/barbearia-venus-rua-olivenca-barcelos-jwoQGy",
-    hours: "Seg–Sáb 09:00–21:00",
+    whatsapp: "https://wa.me/351914197122?text=Tenho%20uma%20d%C3%BAvida",
+    fresha: null, // sem agenda online
+    queueOnly: true, // << ATENDIMENTO POR ORDEM DE CHEGADA
   },
 };
 
@@ -77,7 +76,7 @@ const SERVICES = [
     name: "Combo Corte + Barba",
     duration: "70 min",
     desc: "Pacote completo com economia.",
-    badge: "Mais escolhido",
+    //badge: "Mais escolhido",
     prices: { centro: 35, arcozelo: 36 },
   },
   {
@@ -736,7 +735,10 @@ function Services({ unit, unitId }) {
   const ServiceCard = ({ item }) => (
     <article className="group h-full flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] transition shadow-sm overflow-hidden">
       {/* Imagem com proporção menor no mobile para 2 colunas */}
-      <div className="w-full border-b border-white/10 overflow-hidden aspect-[16/10] md:aspect-[16/9] bg-white/5">
+      <div
+        className="w-full border-b border-white/10 overflow-hidden
+                aspect-[4/3] md:aspect-[16/8] bg-white/5"
+      >
         {item.img ? (
           <img
             src={item.img}
@@ -752,9 +754,8 @@ function Services({ unit, unitId }) {
         )}
       </div>
 
-      {/* Reserva de espaço do badge (mesma altura com/sem badge) */}
-      <div className="px-3 md:px-5 pt-2">
-        <div className="h-5 md:h-6">
+      <div className="px-3 md:px-5 pt-1">
+        <div className="h-2 md:h-3">
           {item.badge && (
             <span className="inline-block text-[10px] md:text-xs px-2 py-0.5 rounded-full bg-brand-copper text-white">
               {item.badge}
@@ -790,16 +791,26 @@ function Services({ unit, unitId }) {
           )}
         </div>
 
-        {/* Botão colado na base para uniformizar altura total */}
+        {/* Rodapé: centro → botão; arcozelo → ordem de chegada */}
         <div className="mt-auto pt-3">
-          <a
-            href={unit.id === "centro" ? UNITS.centro.whatsapp : unit.fresha}
-            className="w-full inline-flex items-center justify-center px-3 py-2 md:px-4 md:py-2.5 rounded-xl border border-white/15 hover:bg-white/10 text-sm"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Agendar
-          </a>
+          {unitId === "arcozelo" ? (
+            <span
+              className="w-full inline-flex items-center justify-center px-3 py-2 md:px-4 md:py-2.5 rounded-xl
+                             bg-white/[0.06] border border-white/10 text-[13px] md:text-sm text-white/90"
+            >
+              Ordem de chegada!
+            </span>
+          ) : (
+            <a
+              href={UNITS.centro.whatsapp}
+              className="w-full inline-flex items-center justify-center px-3 py-2 md:px-4 md:py-2.5 rounded-xl
+                         border border-white/15 hover:bg-white/10 text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Agendar
+            </a>
+          )}
         </div>
       </div>
     </article>
@@ -836,14 +847,20 @@ function Services({ unit, unitId }) {
             Ver nossos combos
           </button>
         </div>
-        <a
-          href={unit.id === "centro" ? UNITS.centro.whatsapp : unit.fresha}
-          className="text-sm underline text-white/80 hover:text-white"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {unit.id === "centro" ? "Falar no WhatsApp" : "Ver agenda completa"}
-        </a>
+        {unitId === "centro" ? (
+          <a
+            href={UNITS.centro.whatsapp}
+            className="text-sm underline text-white/80 hover:text-white"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Falar no WhatsApp
+          </a>
+        ) : (
+          <span className="text-sm text-white/70">
+            Atendimento por ordem de chegada
+          </span>
+        )}
       </div>
 
       {itemsToRender.length ? (
@@ -912,6 +929,9 @@ function Locations({ unitId, setUnitId }) {
       className="mx-auto max-w-6xl px-4 pt-10 md:pt-16 pb-16"
     >
       <h2 className="text-2xl md:text-3xl font-semibold">Nossas unidades</h2>
+      <p className="mt-3 text-white/80 max-w-prose">
+        Selecione a unidade que deseja ser atendido
+      </p>
       <div className="mt-6 grid grid-cols-2 gap-3 md:gap-6">
         {Object.values(UNITS).map((u) => {
           const isActive = unitId === u.id;
@@ -969,18 +989,30 @@ function Locations({ unitId, setUnitId }) {
                     onClick={(e) => e.stopPropagation()}
                     className="col-span-1 inline-flex justify-center px-2 py-2 rounded-xl border border-white/15 hover:bg-white/10 text-xs sm:text-sm"
                   >
-                    Ver rota
+                    Ver rota no maps
                   </a>
 
-                  <a
-                    href={u.id === "centro" ? UNITS.centro.whatsapp : u.fresha}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="col-span-1 inline-flex justify-center px-3 py-2 rounded-xl bg-brand-gold text-black text-xs sm:text-sm font-medium hover:brightness-110"
-                  >
-                    Agendar
-                  </a>
+                  {u.queueOnly ? (
+                    <span
+                      onClick={(e) => e.stopPropagation()}
+                      title="Atendimento por ordem de chegada"
+                      className="col-span-1 inline-flex justify-center px-3 py-2 rounded-xl border border-white/15 bg-white/10 text-xs sm:text-sm text-white/80 cursor-default"
+                    >
+                      Ordem de chegada!
+                    </span>
+                  ) : (
+                    <a
+                      href={
+                        u.id === "centro" ? UNITS.centro.whatsapp : u.fresha
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="col-span-1 inline-flex justify-center px-3 py-2 rounded-xl bg-brand-gold text-black text-xs sm:text-sm font-medium hover:brightness-110"
+                    >
+                      Agende nessa unidade!
+                    </a>
+                  )}
                 </div>
 
                 {/* Imagem: altura fixa no mobile; grande no desktop */}
@@ -1125,7 +1157,7 @@ function LearnMethod() {
           Garanta o seu acesso agora!
         </a>
         <p className="mt-2 text-center text-white/70 text-sm">
-          Inscrições por ordem de chegada.
+          Não perca essa oportunidade!
         </p>
       </div>
 
