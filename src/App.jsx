@@ -602,17 +602,36 @@ function Hero({ unit }) {
 
   return (
     <section className="relative overflow-hidden">
-      {/* overlay decorativo: não bloquear cliques */}
+      {/* overlay decorativo */}
       <div className="pointer-events-none absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(192,160,98,0.3),transparent_50%)]" />
 
-      <div className="mx-auto max-w-6xl px-4 py-10 md:py-20 grid md:grid-cols-2 gap-6 md:gap-10 items-start">
+      <div
+        className="
+      mx-auto max-w-6xl px-4 py-10 md:py-20
+      grid gap-6 md:gap-x-10 md:gap-y-6
+      md:grid-cols-[1fr_minmax(520px,560px)]
+      md:[grid-auto-rows:min-content]
+      items-start
+    "
+      >
         {/* 1) Título */}
-        <h1 className="order-1 md:order-1 md:col-start-1 font-cinzel text-4xl md:text-5xl font-semibold leading-snug mt-2 md:mt-0">
+        <h1
+          className="
+        order-1 md:order-none md:col-[1] md:row-[1]
+        font-cinzel text-4xl md:text-5xl font-semibold leading-snug
+        mt-2 md:mt-0 md:max-w-[18ch] md:pr-8
+      "
+        >
           Corte e barba de alto nível, sem mistério.
         </h1>
 
-        {/* 2) Vídeo */}
-        <div className="order-2 md:order-2 md:col-start-2 relative [perspective:1000px] group mt-3 md:mt-0">
+        {/* 2) Vídeo (fixo na coluna 2, ocupando a altura das linhas da esquerda) */}
+        <div
+          className="
+        order-2 md:order-none md:col-[2] md:row-[1_/span_4] md:self-start
+        relative [perspective:1000px] group mt-3 md:mt-0
+      "
+        >
           <VideoCard>
             <AutoPlayVideo
               key={unit.id}
@@ -631,7 +650,12 @@ function Hero({ unit }) {
         </div>
 
         {/* 3) CTAs */}
-        <div className="order-3 md:order-1 md:col-start-1 mt-2 flex flex-wrap gap-2">
+        <div
+          className="
+        order-3 md:order-none md:col-[1] md:row-[2]
+        mt-2 md:mt-4 flex flex-wrap gap-2 md:pr-8
+      "
+        >
           <a
             href={unit.id === "centro" ? UNITS.centro.whatsapp : unit.fresha}
             className="px-5 py-3 rounded-xl bg-brand-gold text-black font-medium hover:brightness-110 cursor-pointer"
@@ -648,14 +672,24 @@ function Hero({ unit }) {
         </div>
 
         {/* 4) Parágrafo */}
-        <p className="order-4 md:order-1 md:col-start-1 mt-1 text-white/80 max-w-prose">
+        <p
+          className="
+        order-4 md:order-none md:col-[1] md:row-[3]
+        mt-1 md:mt-4 text-white/80 max-w-prose md:max-w-[60ch] md:pr-12
+      "
+        >
           Agende seu atendimento em segundos, ou seja atendido sem agendamento.
           Cada unidade é especializada para melhor lhe atender — conheça o
           Método Venus.
         </p>
 
         {/* 5) Bullets */}
-        <ul className="order-5 md:order-1 md:col-start-1 mt-3 flex flex-wrap gap-3 text-sm text-white/70">
+        <ul
+          className="
+        order-5 md:order-none md:col-[1] md:row-[4]
+        mt-3 md:mt-4 flex flex-wrap gap-3 text-sm text-white/70 md:pr-8
+      "
+        >
           <li className="before:content-['•'] before:mr-2 before:text-brand-gold">
             Profissionais certificados
           </li>
