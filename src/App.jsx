@@ -593,8 +593,8 @@ function VideoCard({ children }) {
 /* === HERO === */
 function Hero({ unit }) {
   const unitVideos = {
-    centro: "/videos/video-unidade-barcelos.mp4",
-    arcozelo: "/videos/video-unidade-arcozelo.mp4",
+    centro: "/videos/video-unidade-barcelos.web.mp4",
+    arcozelo: "/videos/video-unidade-arcozelo.web.mp4",
   };
   const unitPosters = { centro: imgCentro, arcozelo: imgArcozelo };
 
@@ -891,7 +891,7 @@ function Experience() {
         <div className="relative [perspective:1000px] group">
           <VideoCard>
             <AutoPlayVideo
-              src="/videos/video-experiencia-venus-test.mp4"
+              src="/videos/video-experiencia-venus-test.web.mp4"
               poster={imgCentro}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
             />
@@ -1098,7 +1098,7 @@ function LearnMethod() {
       <div className="mt-6">
         <VideoCard>
           <AutoPlayVideo
-            src="/videos/video-experiencia-venus-test.mp4"
+            src="/videos/video-experiencia-venus-test.web.mp4"
             className="w-full h-full object-cover"
           />
         </VideoCard>
