@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* Fonte padrão do site */
+body {
+  @apply bg-brand-black text-brand-ice font-montserrat;
+}
+
+/* Títulos com Cinzel, com leve tracking */
+@layer base {
+  h1,
+  h2,
+  h3,
+  .heading {
+    @apply font-cinzel tracking-wide;
+  }
+}
+
+@layer utilities {
+  /* -------------------- UTILIDADES GERAIS (mantidas) -------------------- */
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+  .animate-float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+  }
+
+  .video-glow {
+    position: relative;
+  }
+  .video-glow::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: -8px;
+    border-radius: 16px;
+    background: radial-gradient(
+        80% 60% at 85% 20%,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0) 60%
+      ),
+      radial-gradient(
+        70% 50% at 10% 90%,
+        rgba(198, 161, 91, 0.18) 0%,
+        rgba(198, 161, 91, 0) 70%
+      );
+    filter: blur(8px);
+    opacity: 0.65;
+  }
+
+  @keyframes sweep-soft {
+    0% {
+      transform: translateX(-30%) rotate(-12deg);
+      opacity: 0.35;
+    }
+    50% {
+      transform: translateX(0) rotate(-12deg);
+      opacity: 0.55;
+    }
+    100% {
+      transform: translateX(30%) rotate(-12deg);
+      opacity: 0.35;
+    }
+  }
+  .animate-sweep-soft {
+    animation: sweep-soft 18s ease-in-out infinite alternate;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-sweep-soft {
+      animation: none;
+    }
+  }
+
+  /* Título/detalhes */
+  .no-hyphens {
+    hyphens: none;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+  .min-h-title-2 {
+    min-height: 44px;
+  }
+  @media (min-width: 768px) {
+    .min-h-title-2 {
+      min-height: 52px;
+    }
+  }
+  .h-price {
+    height: 22px;
+  }
+  @media (min-width: 768px) {
+    .h-price {
+      height: 26px;
+    }
+  }
+  .h-duration {
+    height: 18px;
+  }
+  @media (min-width: 768px) {
+    .h-duration {
+      height: 20px;
+    }
+  }
+
+  /* Ouro e nitidez */
+  .gold-text {
+    background-image: linear-gradient(
+      180deg,
+      #fff4c8 0%,
+      #ffd781 36%,
+      #e4b764 66%,
+      #a67236 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .crisp-text {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+    filter: none !important;
+  }
+  .text-outline-strong {
+    -webkit-text-stroke: 0.6px rgba(0, 0, 0, 0.65);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45), 0 0 1px rgba(0, 0, 0, 0.55);
+  }
+
+  /* Cena mobile do fundador (SEM BLUR que “lava” a imagem) */
+  .scene-isolate {
+    isolation: isolate;
+  }
+  .sharp-img {
+    transform: translateZ(0);
+    image-rendering: auto;
+  }
+
+  /* Vinheta suave nas bordas + base longa (sem filter:blur) */
+  .vignette-soft {
+    background: radial-gradient(
+        120% 105% at 50% 42%,
+        rgba(0, 0, 0, 0) 55%,
+        rgba(0, 0, 0, 0.36) 92%
+      ),
+      linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
+  }
+
+  /* Spotlight leve (sem blur) atrás do rosto */
+  .spot-soft {
+    background: radial-gradient(
+      90% 70% at 52% 38%,
+      rgba(255, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0.03) 30%,
+      rgba(0, 0, 0, 0) 70%
+    );
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  /* “placa” de legibilidade bem sutil atrás do nome */
+  .name-plate {
+    background: rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+  }
+  .name-white {
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff; /* garante branco mesmo com bg-clip prévio */
+    background: none !important; /* desliga qualquer gradiente herdado */
+    -webkit-text-stroke: 0; /* sem contorno duro */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45),
+      /* sombra principal bem suave */ 0 0 1px rgba(0, 0, 0, 0.5); /* micro contorno para leitura */
+  }
+}
