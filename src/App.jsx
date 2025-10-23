@@ -245,26 +245,37 @@ function AutoPlayVideo({
   controls = false,
 }) {
   const ref = useRef(null);
+  const [blocked, setBlocked] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    el.muted = muted;
-    el.playsInline = playsInline;
+    // iOS/Safari são sensíveis aos atributos já estarem no markup
+    el.muted = true; // reforça
+    el.playsInline = true; // reforça
+    el.setAttribute("playsinline", ""); // iOS
+    el.setAttribute("webkit-playsinline", ""); // iOS legacy
 
     const tryPlay = () => {
       const p = el.play?.();
-      if (p?.catch) p.catch(() => {});
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {
+          // Autoplay bloqueado -> mostra botão para toque do usuário
+          setBlocked(true);
+        });
+      }
     };
 
     const onCanPlay = () => tryPlay();
     const onLoadedMeta = () => {
-      if (el.currentTime === 0) el.currentTime = 0.001;
+      if (el.currentTime === 0) el.currentTime = 0.001; // evita frame preto
     };
 
     el.addEventListener("canplay", onCanPlay);
     el.addEventListener("loadedmetadata", onLoadedMeta);
+
+    // primeira tentativa
     tryPlay();
 
     return () => {
@@ -272,22 +283,46 @@ function AutoPlayVideo({
       el.removeEventListener("loadedmetadata", onLoadedMeta);
       el.pause?.();
     };
-  }, [src, muted, playsInline]);
+  }, [src]);
 
   return (
-    <video
-      ref={ref}
-      loop={loop}
-      muted={muted}
-      playsInline={playsInline}
-      preload={preload}
-      poster={poster}
-      controls={controls}
-      className={className}
-    >
-      <source src={src} type="video/mp4" />
-      Seu navegador não suporta vídeo.
-    </video>
+    <div className="relative">
+      <video
+        ref={ref}
+        // Estes 3 atributos **precisam** estar no DOM para iOS
+        autoPlay
+        muted
+        playsInline
+        // (o resto é igual)
+        loop={loop}
+        preload={preload}
+        poster={poster}
+        controls={controls}
+        className={className}
+      >
+        <source src={src} type="video/mp4" />
+        Seu navegador não suporta vídeo.
+      </video>
+
+      {/* Fallback: se iOS bloquear autoplay, aparece um botão de tocar */}
+      {blocked && (
+        <button
+          type="button"
+          onClick={() => {
+            const el = ref.current;
+            if (!el) return;
+            el.muted = true;
+            el.playsInline = true;
+            el.play?.();
+            setBlocked(false);
+          }}
+          className="absolute inset-0 grid place-items-center bg-black/40 text-white text-sm rounded-xl"
+          aria-label="Tocar vídeo"
+        >
+          Tocar vídeo
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -591,10 +626,12 @@ function VideoCard({ children }) {
 }
 /* === HERO === */
 function Hero({ unit }) {
+  // troque as fontes dos vídeos usados no Hero
   const unitVideos = {
-    centro: "/videos/video-unidade-barcelos.web.mp4",
-    arcozelo: "/videos/video-unidade-arcozelo.web.mp4",
+    centro: "/videos/video-unidade-barcelos.ios.mp4",
+    arcozelo: "/videos/video-unidade-arcozelo.ios.mp4",
   };
+
   const unitPosters = { centro: imgCentro, arcozelo: imgArcozelo };
 
   return (
@@ -908,7 +945,7 @@ function Experience() {
         <div className="relative [perspective:1000px] group">
           <VideoCard>
             <AutoPlayVideo
-              src="/videos/video-experiencia-venus-test.web.mp4"
+              src="/videos/video-experiencia-venus-test.ios.mp4"
               poster={imgCentro}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
             />
