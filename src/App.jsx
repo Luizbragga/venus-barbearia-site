@@ -33,25 +33,25 @@ function useInView(options = { threshold: 0.25, rootMargin: "0px" }) {
 const UNITS = {
   centro: {
     id: "centro",
-    label: "Venus protese capilar",
+    label: "Vênus Prótese Capilar (Centro)",
     address: "Av. Dom Nuno Álvares Pereira 157, Sala 4 — Barcelos",
     phone: "+351 914 418 198",
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Av.+Dom+Nuno+%C3%81lvares+Pereira+157,+Sala+4,+Barcelos",
     whatsapp: "https://wa.me/351914418198?text=Quero%20agendar",
-    fresha: "#", // sem link oficial; por ora usamos WhatsApp
+    fresha: "#",
     hours: "Seg–Sáb 09:00–21:00",
   },
   arcozelo: {
     id: "arcozelo",
-    label: "Venus barbearia delivery",
+    label: "Vênus Barbearia .pt (Arcozelo)",
     address: "R. de Olivença 281, 4750-191 Barcelos",
     phone: "+351 914 197 122",
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=R.+de+Oliven%C3%A7a+281,+4750-191+Barcelos",
     whatsapp: "https://wa.me/351914197122?text=Tenho%20uma%20d%C3%BAvida",
-    fresha: null, // sem agenda online
-    queueOnly: true, // << ATENDIMENTO POR ORDEM DE CHEGADA
+    fresha: null,
+    queueOnly: true, // atendimento por ordem de chegada
   },
 };
 
@@ -60,30 +60,29 @@ const SERVICES = [
   {
     id: "corte",
     name: "Corte",
-    duration: "45 min",
+    duration: "30–45 min",
     desc: "Consultoria + corte de precisão + finalização.",
-    prices: { centro: 22, arcozelo: 23 },
+    prices: { centro: 17, arcozelo: 14 },
   },
   {
     id: "barba",
-    name: "Barba",
+    name: "Barba ou Contornos",
     duration: "30 min",
-    desc: "Modelagem + toalha quente + acabamento tradicional.",
-    prices: { centro: 16, arcozelo: 17 },
+    desc: "Modelagem + toalha quente + acabamento.",
+    prices: { centro: 10, arcozelo: 10 },
   },
   {
     id: "combo",
     name: "Combo Corte + Barba",
-    duration: "70 min",
+    duration: "50–70 min",
     desc: "Pacote completo com economia.",
-    //badge: "Mais escolhido",
-    prices: { centro: 35, arcozelo: 36 },
+    prices: { centro: 25, arcozelo: 20 },
   },
   {
-    id: "kids",
-    name: "Kids",
-    duration: "30 min",
-    desc: "Corte especial para crianças.",
+    id: "hidratacao",
+    name: "Hidratação no cabelo",
+    duration: "25 min",
+    desc: "Tratamento de hidratação.",
     prices: { centro: 15, arcozelo: 15 },
   },
 ];
@@ -96,142 +95,290 @@ const SERVICES_BY_UNIT = {
         id: "avaliacao-protese",
         name: "Prótese capilar — Avaliação",
         duration: "30 min",
-        priceLabel: "£0",
+        priceLabel: "€0",
         img: null,
       },
+      {
+        id: "protese-capilar",
+        name: "Prótese capilar",
+        duration: null,
+        priceLabel: "a partir de €400",
+        img: null,
+      },
+      {
+        id: "manutencao-protese-corte",
+        name: "Manutenção de prótese + corte",
+        duration: "1h 20 min",
+        priceLabel: "a partir de €40",
+        img: null,
+      },
+
       {
         id: "platinado-nevou",
         name: "Platinado / Nevou",
         duration: "3h",
-        priceLabel: "£60,00",
+        priceLabel: "a partir de €60",
         img: null,
       },
       {
         id: "madeixas-luzes",
         name: "Madeixas / Luzes",
         duration: "3h",
-        priceLabel: "a partir de £40,00",
+        priceLabel: "a partir de €40",
         img: null,
       },
       {
         id: "alisamento-progressiva",
-        name: "Alisamento / Progressiva",
+        name: "Alisamento / progressiva / botox",
         duration: "40 min",
-        priceLabel: "£35,00",
-        img: null,
-      },
-      {
-        id: "corte-geral",
-        name: "Corte de cabelo (geral)",
-        duration: "30 min",
-        priceLabel: "£17,00",
-        img: null,
-      },
-      {
-        id: "barba-contornos",
-        name: "Barba ou Contornos",
-        duration: "30 min",
-        priceLabel: "£10,00",
-        img: null,
-      },
-      {
-        id: "limpeza-cera-nariz",
-        name: "Limpeza na cera (nariz)",
-        duration: "10 min",
-        priceLabel: "£7,00",
+        priceLabel: "€35",
         img: null,
       },
       {
         id: "hidratacao",
-        name: "Hidratação",
+        name: "Hidratação no cabelo",
         duration: "25 min",
-        priceLabel: "£15,00",
+        priceLabel: "€15",
         img: null,
       },
+
       {
         id: "limpeza-pele",
         name: "Limpeza de pele",
         duration: "30 min",
-        priceLabel: "£25,00",
-        img: null,
-      },
-      {
-        id: "sobrancelha",
-        name: "Sobrancelha",
-        duration: "5 min",
-        priceLabel: "£5,00",
+        priceLabel: "€25",
         img: null,
       },
       {
         id: "pigmentacao",
         name: "Pigmentação",
         duration: "10 min",
-        priceLabel: "£15,00",
+        priceLabel: "€15",
+        img: null,
+      },
+
+      {
+        id: "corte-cabelo",
+        name: "Corte de cabelo",
+        duration: "30 min",
+        priceLabel: "€17",
         img: null,
       },
       {
-        id: "corte-emergencial",
-        name: "Corte emergencial",
-        duration: "1h",
-        priceLabel: "£50,00",
+        id: "barba-contornos",
+        name: "Barba ou Contornos",
+        duration: "30 min",
+        priceLabel: "€10",
         img: null,
       },
+
+      {
+        id: "limpeza-cera",
+        name: "Limpeza na cera (nariz/orelhas)",
+        duration: "10 min",
+        priceLabel: "€5",
+        img: null,
+      },
+      {
+        id: "sobrancelha-pinca",
+        name: "Sobrancelha na pinça",
+        duration: "5 min",
+        priceLabel: "€7",
+        img: null,
+      },
+      // ⚠️ “Lavagem” removida como item avulso. É cortesia embutida nos cortes.
     ],
     Combos: [
       {
-        id: "manutencao-protese-corte",
-        name: "Manutenção de prótese + corte",
-        duration: "1h 20 min",
-        priceLabel: "£40,00",
-        img: null,
-        //badge: "Popular",
-      },
-      {
-        id: "corte-barba",
+        id: "combo-corte-barba",
         name: "Corte + Barba",
         duration: "50 min",
-        priceLabel: "£25,00",
+        priceLabel: "€25",
         img: null,
       },
       {
-        id: "corte-sobrancelha",
-        name: "Corte + Sobrancelha",
-        duration: null,
-        priceLabel: "£20,00",
-        img: null,
-      },
-      {
-        id: "corte-barba-sobrancelha",
+        id: "combo-corte-barba-sobrancelha",
         name: "Corte + Barba + Sobrancelha",
-        duration: "55 min",
-        priceLabel: "£30,00",
+        duration: null,
+        priceLabel: "€30",
         img: null,
       },
       {
-        id: "corte-barba-sobrancelha-hidratacao",
+        id: "combo-cabelo-sobrancelha",
+        name: "Cabelo + Sobrancelha",
+        duration: null,
+        priceLabel: "€20",
+        img: null,
+      },
+      {
+        id: "combo-cbs-hidratacao",
         name: "Corte + Barba + Sobrancelha + Hidratação",
         duration: "1h",
-        priceLabel: "£45,00",
-        img: null,
-        //badge: "Mais completo",
-      },
-      {
-        id: "limpeza-cera-nariz-orelhas",
-        name: "Limpeza na cera (nariz + orelhas)",
-        duration: "10 min",
-        priceLabel: "£10,00",
+        priceLabel: "€45",
         img: null,
       },
       {
-        id: "corte-risco",
-        name: "Corte + Risco",
-        duration: "35 min",
-        priceLabel: "£20,00",
+        id: "combo-cbs-limpeza-pele",
+        name: "Corte + Barba + Sobrancelha + Limpeza de pele",
+        duration: null,
+        priceLabel: "€55",
         img: null,
       },
+      {
+        id: "combo-cbs-pigmentacao",
+        name: "Corte + Barba + Sobrancelha + Pigmentação (Cabelo e Barba)",
+        duration: null,
+        priceLabel: "€45",
+        img: null,
+      },
+      {
+        id: "combo-cbs-pigmentacao-opcao",
+        name: "Corte + Barba + Sobrancelha + Pigmentação (1 Cabelo ou 2 Barba)",
+        duration: null,
+        priceLabel: "€60",
+        img: null,
+      },
+      // ⚠️ Sem “Lavagem” como combo; é cortesia nos cortes.
     ],
   },
-  arcozelo: null, // sem categorias ainda → usa fallback
+
+  arcozelo: {
+    Serviços: [
+      {
+        id: "platinado-nevou-a",
+        name: "Platinado / Nevou",
+        duration: "3h",
+        priceLabel: "a partir de €60",
+        img: null,
+      },
+      {
+        id: "madeixas-luzes-a",
+        name: "Madeixas / Luzes",
+        duration: "3h",
+        priceLabel: "a partir de €40",
+        img: null,
+      },
+      {
+        id: "alisamento-progressiva-a",
+        name: "Alisamento / progressiva / botox",
+        duration: "40 min",
+        priceLabel: "€35",
+        img: null,
+      },
+      {
+        id: "hidratacao-a",
+        name: "Hidratação no cabelo",
+        duration: "25 min",
+        priceLabel: "€15",
+        img: null,
+      },
+
+      {
+        id: "limpeza-pele-a",
+        name: "Limpeza de pele",
+        duration: "30 min",
+        priceLabel: "€25",
+        img: null,
+      },
+      {
+        id: "pigmentacao-a",
+        name: "Pigmentação",
+        duration: "10 min",
+        priceLabel: "€15",
+        img: null,
+      },
+
+      {
+        id: "corte-cabelo-a",
+        name: "Corte de cabelo",
+        duration: "30 min",
+        priceLabel: "€14",
+        img: null,
+      },
+      {
+        id: "barba-contornos-a",
+        name: "Barba ou Contornos",
+        duration: "30 min",
+        priceLabel: "€10",
+        img: null,
+      },
+
+      {
+        id: "limpeza-cera-a",
+        name: "Limpeza na cera",
+        duration: "10 min",
+        priceLabel: "€7",
+        img: null,
+      },
+      {
+        id: "sobrancelha-a",
+        name: "Sobrancelha (básica)",
+        duration: "5 min",
+        priceLabel: "€2",
+        img: null,
+      },
+      {
+        id: "sobrancelha-pinca-a",
+        name: "Sobrancelha na pinça",
+        duration: "5 min",
+        priceLabel: "€5",
+        img: null,
+      },
+      // ⚠️ “Lavagem” removida como item avulso. É cortesia embutida nos cortes.
+    ],
+    Combos: [
+      {
+        id: "combo-corte-barba-a",
+        name: "Corte + Barba",
+        duration: "45–50 min",
+        priceLabel: "€20",
+        img: null,
+      },
+      {
+        id: "combo-corte-barba-sobrancelha-a",
+        name: "Corte + Barba + Sobrancelha",
+        duration: null,
+        priceLabel: "€22",
+        img: null,
+      },
+      {
+        id: "combo-cabelo-sobrancelha-a",
+        name: "Cabelo + Sobrancelha",
+        duration: null,
+        priceLabel: "€16",
+        img: null,
+      },
+      {
+        id: "combo-cbs-hidratacao-a",
+        name: "Corte + Barba + Sobrancelha + Hidratação",
+        duration: null,
+        priceLabel: "€35",
+        img: null,
+      },
+      {
+        id: "combo-cbs-limpeza-pele-a",
+        name: "Corte + Barba + Sobrancelha + Limpeza de pele",
+        duration: null,
+        priceLabel: "€45",
+        img: null,
+      },
+      {
+        id: "combo-cbs-pigmentacao-a",
+        name: "Corte + Barba + Sobrancelha + Pigmentação (Cabelo e Barba)",
+        duration: null,
+        priceLabel: "€35",
+        img: null,
+      },
+      {
+        id: "combo-cbs-pigmentacao-opcao-a",
+        name: "Corte + Barba + Sobrancelha + Pigmentação (1 Cabelo ou 2 Barba)",
+        duration: null,
+        priceLabel: "€50",
+        img: null,
+      },
+      // ⚠️ Sem “Lavagem” como combo.
+    ],
+  },
 };
 
 function AutoPlayVideo({
@@ -289,16 +436,16 @@ function AutoPlayVideo({
     <div className="relative">
       <video
         ref={ref}
-        // Estes 3 atributos **precisam** estar no DOM para iOS
         autoPlay
         muted
         playsInline
-        // (o resto é igual)
         loop={loop}
         preload={preload}
         poster={poster}
         controls={controls}
-        className={className}
+        className={`block w-full h-full object-cover object-center ${
+          className || ""
+        }`}
       >
         <source src={src} type="video/mp4" />
         Seu navegador não suporta vídeo.
@@ -382,7 +529,7 @@ function Header({ unitId, setUnitId }) {
             className="h-9 w-auto select-none"
             draggable="false"
           />
-          <span className="font-semibold tracking-wide">Venus Barbearia</span>
+          <span className="font-semibold tracking-wide">Vênus Barbearia</span>
         </a>
 
         {/* Navegação desktop */}
@@ -394,7 +541,7 @@ function Header({ unitId, setUnitId }) {
             Serviços
           </a>
           <a href="#aprenda" className="hover:text-white">
-            Método Venus
+            Método Vênus
           </a>
           <a href="#conheca" className="hover:text-white">
             Conheça
@@ -512,7 +659,7 @@ function MobileMenu({ onClose, unitId, setUnitId, scheduleHref }) {
         <div className="p-4 flex items-center justify-between border-b border-white/10">
           <div className="flex items-center gap-2">
             <img src={logo} alt="" className="h-7 w-auto" />
-            <span className="font-medium">Venus Barbearia</span>
+            <span className="font-medium">Vênus Barbearia</span>
           </div>
           <button
             onClick={onClose}
@@ -551,7 +698,7 @@ function MobileMenu({ onClose, unitId, setUnitId, scheduleHref }) {
             onClick={onClose}
             className="px-3 py-2 rounded-lg hover:bg-white/5"
           >
-            Método Venus
+            Método Vênus
           </a>
           <a
             href="#conheca"
@@ -616,14 +763,14 @@ function VideoCard({ children }) {
         transformStyle: "preserve-3d",
       }}
     >
-      <div className="aspect-[16/10] w-full rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-sm">
+      {/* camada interna sem bg/border/blur para não criar “faixa” */}
+      <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden leading-none">
         {children}
-        {/* “sheen” ao hover */}
-        <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity -100 duration-500 bg-[linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent)]" />
       </div>
     </div>
   );
 }
+
 /* === HERO === */
 function Hero({ unit }) {
   // troque as fontes dos vídeos usados no Hero
@@ -714,7 +861,7 @@ function Hero({ unit }) {
         >
           Agende seu atendimento em segundos, ou seja atendido sem agendamento.
           Cada unidade é especializada para melhor lhe atender — conheça o
-          Método Venus.
+          Método Vênus.
         </p>
 
         {/* 5) Bullets */}
@@ -792,13 +939,7 @@ function Services({ unit, unitId }) {
       </div>
 
       <div className="px-3 md:px-5 pt-1">
-        <div className="h-2 md:h-3">
-          {item.badge && (
-            <span className="inline-block text-[10px] md:text-xs px-2 py-0.5 rounded-full bg-brand-copper text-white">
-              {item.badge}
-            </span>
-          )}
-        </div>
+        <div className="h-2 md:h-3" />
       </div>
 
       {/* Corpo com alturas padronizadas */}
@@ -909,6 +1050,10 @@ function Services({ unit, unitId }) {
       ) : (
         <p className="mt-8 text-white/60">Nenhum item nesta categoria ainda.</p>
       )}
+      <p className="mt-4 text-xs md:text-sm text-white/60">
+        Lavagem (antes/depois do corte) está incluída como cortesia nos
+        atendimentos.
+      </p>
     </section>
   );
 }
@@ -921,7 +1066,7 @@ function Experience() {
         {/* Coluna de texto (igual) */}
         <div>
           <h2 className="text-2xl md:text-3xl font-semibold">
-            A experiência Venus
+            A experiência Vênus
           </h2>
           <p className="mt-3 text-white/80 max-w-prose">
             Precisão clássica, ambiente agradável e atenção real aos detalhes.
@@ -1201,7 +1346,7 @@ function LearnMethod() {
       {/* benefícios rápidos */}
       <ul className="mt-6 grid md:grid-cols-3 gap-4 text-base md:text-lg text-white/80">
         <li className="rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 leading-relaxed">
-          • Invista no seu futuro com a Venus e conheça o nosso método
+          • Invista no seu futuro com a Vênus e conheça o nosso método
         </li>
         <li className="rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 leading-relaxed">
           • Uma das profissões que mais cresce na Europa e no mundo
@@ -1313,7 +1458,7 @@ function AboutOwner() {
       {/* ======== MOBILE – clean, nítido e com camadas leves ======== */}
       <div className="md:hidden px-4">
         <h2 className="font-cinzel text-2xl font-semibold text-center mt-1 crisp-text">
-          Conheça a Venus & o fundador
+          Conheça a Vênus & o fundador
         </h2>
 
         {/* Cena mobile */}
@@ -1379,7 +1524,7 @@ function AboutOwner() {
 
         <div className="relative z-40 -mt-16">
           <p className="-mt-1 text-sm text-white/70 text-center">
-            Fundador da Venus Barbearia • Nasc. 05/12/1995 • Barcelos, PT
+            Fundador da Vênus Barbearia • Nasc. 05/12/1995 • Barcelos, PT
           </p>
           <div className="prose prose-invert text-white/85 max-w-none mt-1 leading-relaxed">
             {/* ...parágrafos... */}
@@ -1400,9 +1545,9 @@ function AboutOwner() {
             guiada por persistência, caráter e resiliência.
           </p>
           <p>
-            Empreendedor nato, fundou a <strong>Venus Barbearia</strong> na
+            Empreendedor nato, fundou a <strong>Vênus Barbearia</strong> na
             garagem de casa para estar mais presente com a família e criar renda
-            sustentável. A Venus evoluiu para uma operação sólida — fruto de
+            sustentável. A Vênus evoluiu para uma operação sólida — fruto de
             disciplina, aprendizagem contínua e foco no cliente.
           </p>
           <p>
@@ -1436,7 +1581,7 @@ function AboutOwner() {
       {/* ======== DESKTOP – mantém seu layout, só troca imagem p/ nova ======== */}
       <div className="hidden md:block w-full px-6 lg:px-10 xl:px-16 2xl:px-24">
         <h2 className="font-cinzel text-2xl md:text-3xl font-semibold">
-          Conheça a Venus & o fundador
+          Conheça a Vênus & o fundador
         </h2>
 
         <div
@@ -1460,7 +1605,7 @@ function AboutOwner() {
             Gengiscan dos Santos Correia
           </h3>
           <p className="mt-2 text-white/70 text-sm">
-            Fundador da Venus Barbearia • Nasc. 05/12/1995 • Barcelos, PT
+            Fundador da Vênus Barbearia • Nasc. 05/12/1995 • Barcelos, PT
           </p>
 
           <div className="prose prose-invert text-white/85 max-w-none mt-6 leading-relaxed">
@@ -1477,9 +1622,9 @@ function AboutOwner() {
               guiada por persistência, caráter e resiliência.
             </p>
             <p>
-              Empreendedor nato, fundou a <strong>Venus Barbearia</strong> na
+              Empreendedor nato, fundou a <strong>Vênus Barbearia</strong> na
               garagem de casa para estar mais presente com a família e criar
-              renda sustentável. A Venus evoluiu para uma operação sólida —
+              renda sustentável. A Vênus evoluiu para uma operação sólida —
               fruto de disciplina, aprendizagem contínua e foco no cliente.
             </p>
             <p>
@@ -1580,14 +1725,14 @@ function Footer() {
     <footer className="border-t border-white/10">
       <div className="mx-auto max-w-6xl px-4 py-10 flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
         <div className="text-center md:text-left">
-          <p className="font-semibold">Venus Barbearia</p>
+          <p className="font-semibold">Vênus Barbearia</p>
           <p className="text-sm text-white/70">
             Clássico, clean e premium — do seu jeito.
           </p>
         </div>
         <div className="text-sm text-white/60">
           <p>
-            © {new Date().getFullYear()} Venus Barbearia. Todos os direitos
+            © {new Date().getFullYear()} Vênus Barbearia. Todos os direitos
             reservados.
           </p>
         </div>
