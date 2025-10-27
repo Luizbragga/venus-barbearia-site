@@ -888,7 +888,11 @@ function Hero({ unit }) {
 
 /* === SERVIÇOS (abas) === */
 function Services({ unit, unitId }) {
-  const [activeTab, setActiveTab] = useState("Serviços");
+  const [activeTab, setActiveTab] = useState(null);
+  const [revealed, setRevealed] = useState(false);
+  const baseBtn =
+    "px-3 py-2 rounded-xl text-sm border border-white/15 hover:bg-white/10 transition";
+  const activeBtn = "bg-brand-gold text-black border-transparent";
 
   const fallbackItems = SERVICES.map((s) => ({
     id: s.id,
@@ -945,7 +949,7 @@ function Services({ unit, unitId }) {
       {/* Corpo com alturas padronizadas */}
       <div className="px-3 md:px-5 pb-4 md:pb-5 flex-1 flex flex-col">
         {/* Título com altura fixa de 2 linhas */}
-        <h3 className="min-h-title-2 text-[14px] md:text-lg font-medium leading-snug line-clamp-2 no-hyphens">
+        <h3 className="md:min-h-title-2 text-[12px] md:text-lg font-medium leading-tight no-hyphens line-clamp-5 md:line-clamp-2">
           {item.name}
         </h3>
 
@@ -1003,24 +1007,33 @@ function Services({ unit, unitId }) {
         <h2 className="font-cinzel text-2xl md:text-3xl font-semibold">
           Serviços & Preços
         </h2>
+        <div className="basis-full mt-1">
+          <span className="inline-flex items-center gap-2 text-xs px-2 py-1 rounded-lg bg-white/5 border border-white/10">
+            Unidade:{" "}
+            <strong className="text-white">{UNITS[unitId].label}</strong>
+          </span>
+        </div>
         <div className="flex gap-2">
           <button
-            onClick={() => setActiveTab("Serviços")}
-            className={`px-3 py-2 rounded-xl text-sm ${
-              activeTab === "Serviços"
-                ? "bg-brand-gold text-black"
-                : "border border-white/15 hover:bg-white/10"
+            aria-pressed={activeTab === "Serviços"}
+            onClick={() => {
+              setActiveTab("Serviços");
+              setRevealed(true);
+            }}
+            className={`${baseBtn} ${
+              activeTab === "Serviços" ? activeBtn : ""
             }`}
           >
             Ver nossos serviços
           </button>
+
           <button
-            onClick={() => setActiveTab("Combos")}
-            className={`px-3 py-2 rounded-xl text-sm ${
-              activeTab === "Combos"
-                ? "bg-brand-gold text-black"
-                : "border border-white/15 hover:bg-white/10"
-            }`}
+            aria-pressed={activeTab === "Combos"}
+            onClick={() => {
+              setActiveTab("Combos");
+              setRevealed(true);
+            }}
+            className={`${baseBtn} ${activeTab === "Combos" ? activeBtn : ""}`}
           >
             Ver nossos combos
           </button>
@@ -1041,15 +1054,24 @@ function Services({ unit, unitId }) {
         )}
       </div>
 
-      {itemsToRender.length ? (
-        <div className="mt-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {itemsToRender.map((item) => (
-            <ServiceCard key={item.id} item={item} />
-          ))}
-        </div>
+      {revealed ? (
+        itemsToRender.length ? (
+          <div className="mt-6 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {itemsToRender.map((item) => (
+              <ServiceCard key={item.id} item={item} />
+            ))}
+          </div>
+        ) : (
+          <p className="mt-8 text-white/60">
+            Nenhum item nesta categoria ainda.
+          </p>
+        )
       ) : (
-        <p className="mt-8 text-white/60">Nenhum item nesta categoria ainda.</p>
+        <p className="mt-6 text-white/60">
+          Escolha uma opção acima para ver a lista.
+        </p>
       )}
+
       <p className="mt-4 text-xs md:text-sm text-white/60">
         Lavagem (antes/depois do corte) está incluída como cortesia nos
         atendimentos.
